@@ -1,0 +1,8 @@
+main: me.COAR.CoarMcServer.Main
+name: CoarMcServer
+version: 1.0
+author: COAR_
+api-version: 1.16
+
+commands:
+   feed: 
