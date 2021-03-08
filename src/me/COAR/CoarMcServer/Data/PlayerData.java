@@ -4,13 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,50 +18,26 @@ import me.COAR.CoarMcServer.Main;
 
 
 public class PlayerData {
-//	Creating instances of files and formats
-	private File subDir = null;
-	private File playerDataFile = null;
-	private FileConfiguration playerDataConfig = null;
-	SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-	
-//	PlayerData constructor
+//	PlayerData constructor | get main class for OOP
 	private Main main;
 	public PlayerData(Main plugin) {
 		this.main = plugin;
 	}
 	
-//	Create ServerEssentials ~PlayerData~ folder
-	public boolean createSubFolder() {
-		this.subDir = new File(Bukkit.getServer().getPluginManager().getPlugin("ServerEssentials").getDataFolder().getPath() + System.getProperty("file.separator") + "PlayerData");
-		return subDir.mkdir();
-	}
-	
-//	Create (or set) ~PlayerData~ file in ~PlayerData~ folder
-	public Boolean createPlayerDataFile(Player p) {
-		this.playerDataFile = new File(this.subDir.getPath() + System.getProperty("file.separator") + (p.getUniqueId() + ".yml"));
-		try {
-			playerDataFile.createNewFile();
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+//	Creating and setting instances of files 
+	private File subDir;
+	private File playerDataFile;
+	private FileConfiguration playerDataConfig = null;
 
-//	Get ~PlayerData~ file from folder ~PlayerData~
-	public File getPlayerDataFile(Player p) {
-		this.playerDataFile = new File(this.subDir.getPath() + System.getProperty("file.separator") + (p.getUniqueId() + ".yml"));
-		return this.playerDataFile;
-	}
 	
 //	Reload, set and/or create ~PlayerData~ files
 	public void reloadPlayerDataConfig(Player p) {
 		if(this.subDir == null)
 			createSubFolder();
 		if(this.playerDataFile == null)
-			createPlayerDataFile(p);
+			createPlayerFile(p);
 		
-		this.playerDataConfig = YamlConfiguration.loadConfiguration(getPlayerDataFile(p));
+		this.playerDataConfig = YamlConfiguration.loadConfiguration(getPlayerFile(p));
 		InputStream defaultStreem = this.main.getResource(this.subDir.getPath() + System.getProperty("file.separator") + (p.getUniqueId() + ".yml"));
 		if(defaultStreem != null) {
 			YamlConfiguration defaultConfig = YamlConfiguration.loadConfiguration(new InputStreamReader(defaultStreem));
@@ -71,13 +45,12 @@ public class PlayerData {
 		}
 	}
 	
-//	Get config
 	public FileConfiguration getConfig(Player p) {
 		if(this.playerDataConfig == null)
 			reloadPlayerDataConfig(p);
 		return this.playerDataConfig;
 	}  
-
+	
 	//	Save config file
 	public Boolean saveConfig(Player p) {
 		if(this.playerDataConfig == null || this.playerDataFile == null)
@@ -91,53 +64,36 @@ public class PlayerData {
 		}
 	}
 	
-//	Create player file & set config sections and nodes
-	public void saveDefaultFile(Player p) {
-		main.functions.tellConsole("In savedefault");
-		if(this.subDir == null);
-			createSubFolder();
-		if(this.subDir != null && this.playerDataFile == null)
-			createPlayerDataFile(p);
-		if(this.playerDataFile != null) {
-			getConfig(p).createSection(p.getUniqueId().toString());
-			saveConfig(p);
-			setPlayerData(p, p.getUniqueId().toString(), "PlayerName", p.getDisplayName());
-			if(!(p.hasPlayedBefore())) {
-				Date dateFirstLogin = new Date();
-				setPlayerData(p, p.getUniqueId().toString(), "FirstLogin", dateFormat.format(dateFirstLogin).toString());
-			} else {
-				setPlayerData(p, p.getUniqueId().toString(), "FirstLogin", "");
-			}
-			setPlayerData(p, p.getUniqueId().toString(), "LastLogin", "");
-			setPlayerSection(p, p.getUniqueId().toString(), "ToggleData");
-			setPlayerSection(p, p.getUniqueId().toString(), "DeathMessages");
-			setPlayerSection(p, p.getUniqueId().toString(), "DeathMessages");
-			setPlayerData(p, (p.getUniqueId().toString() + ".DeathMessages"), "Enabled", "false");
-			saveConfig(p);
-
-		}
-	}
-
-//	Get player data
-	public String getPlayerData(Player p, String section, String value) {
-		String[] tempArgs = section.split(".");
-		ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
-		for(String key : tempArgs) {
-			configSection.getConfigurationSection(key);
-		}
-		return configSection.getString(value);
+//	Create PlayerData sub folder
+	public boolean createSubFolder() {
+//		Create a file which equals the sub directory
+		this.subDir = new File(main.getDataFolder().getPath() + System.getProperty("file.separator") + "PlayerData");
+//		Create the sub directory and return if it is successful
+		return subDir.mkdir();
 	}
 	
-//	Set player data
-	public Boolean setPlayerData(Player p, String section, String node, String value) {		
-		String[] tempArgs = section.split(".");
-		ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
-		for(String key : tempArgs) {
-			configSection.getConfigurationSection(key);
-		}
-		configSection.set(node, value);
+//	Set PlayerData sub folder
+	public boolean setSubFolder() {
+//		Check if the sub directory exists if it does not create it and set the var 
+		File tempDir = new File(main.getDataFolder().getPath() + System.getProperty("file.separator") + "PlayerData");
+		if(!(tempDir.exists()))
+			createSubFolder();
+		this.subDir = tempDir;
+		return true;
+	}
+	
+//	Get PlayerData sub folder
+	public File getSubFolder() {
+		if(setSubFolder())
+			return subDir;
+		return null;
+	}
+	
+//	Create Player file bases on unique id | UUID
+	public boolean createPlayerFile(Player p) {
+		File tempFile = new File(this.subDir.getPath() + System.getProperty("file.separator") + (p.getUniqueId() + ".yml"));
 		try {
-			playerDataConfig.save(playerDataFile);
+			tempFile.createNewFile();
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -145,15 +101,137 @@ public class PlayerData {
 		}
 	}
 	
+//	set var private File playerDataFile
+	public void setPlayerFile(Player p) {
+		if(this.subDir == null)
+			setSubFolder();
+		File tempFile = new File(this.subDir.getPath() + System.getProperty("file.separator") + (p.getUniqueId() + ".yml"));
+		if(!(tempFile.exists()))
+			createPlayerFile(p);
+		this.playerDataFile = tempFile;
+	}
+	
+//	get var private File playerDataFile
+	public File getPlayerFile(Player p) {
+		setPlayerFile(p);
+		return this.playerDataFile;
+	}
+	
+//	Save the default values
+	public void saveDefault(Player p) {
+		if(this.subDir == null) {
+			createSubFolder();
+		}
+			
+		if(this.subDir != null && this.playerDataConfig.contains(p.getUniqueId().toString())) {
+			setPlayerFile(p);
+		}
+			
+		Date dateFirstLogin = new Date();
+		String playerId = p.getUniqueId().toString();
+		getConfig(p).createSection(playerId);
+		getConfig(p).getConfigurationSection(playerId).set("PlayerName", p.getDisplayName().toString());
+		
+		if(p.hasPlayedBefore())
+			getConfig(p).getConfigurationSection(playerId).set("FirstLogin", "");
+		else
+			getConfig(p).getConfigurationSection(playerId).set("FirstLogin", main.functions.getDateFormat().format(dateFirstLogin.toString()));
+		getConfig(p).getConfigurationSection(playerId).set("LastLogin", "");
+		getConfig(p).getConfigurationSection(playerId).createSection("ToggleData");
+		
+		saveConfig(p);
+	}
+	
+    // Get player data which has type String
+    public String getPlayerDataString(Player p, String section, String value) {
+        String[] tempArgs = null;
+        ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
+        if(section.contains(".")) {
+            tempArgs = section.split(".");
+            for(String key : tempArgs) {
+                configSection = configSection.getConfigurationSection(key);
+            }
+            return configSection.getString(value);
+        }  
+        else if(!section.contains(".")) {
+            configSection = configSection.getConfigurationSection(section);
+            return configSection.getString(value);
+        }
+        return "";
+    }
+
+    // Get player data which has type Boolean
+    public Boolean getPlayerDataBoolean(Player p, String section, String value) {
+        String[] tempArgs;
+        ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
+        if(section.contains(".")) {
+            tempArgs = section.split(".");
+            for(String key : tempArgs) {
+                configSection = configSection.getConfigurationSection(key);
+            }
+            return configSection.getBoolean(value);
+        }  
+        else if(!section.contains(".")) {
+            configSection = configSection.getConfigurationSection(section);
+            return configSection.getBoolean(value);
+        }
+        return null;
+    }
+	
+    // Set player data which has type String
+    public Boolean setPlayerDataString(Player p, String section, String node, String value) {
+        String[] tempArgs;
+		ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
+        if(section.contains(".")) {
+            tempArgs = section.split(".");
+            for(String key : tempArgs) {
+                configSection = configSection.getConfigurationSection(key);
+            }
+            configSection.set(node, value);
+            return saveConfig(p);
+        } else if(!section.contains(".")) {
+            configSection = configSection.getConfigurationSection(section);
+            configSection.set(node, value);
+            return saveConfig(p);
+        }
+        return null;
+    }
+    // Set player data which has type String
+    public Boolean setPlayerDataBoolean(Player p, String section, String node, Boolean value) {
+        String[] tempArgs;
+        ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
+        if(section.contains(".")) {
+            tempArgs = section.split(".");
+            for(String key : tempArgs) {
+                configSection = configSection.getConfigurationSection(key);
+            }
+            configSection.set(node, value);
+            return saveConfig(p);
+        } else if(!section.contains(".")) {
+            configSection.getConfigurationSection(section).set(node, value);
+            return saveConfig(p);
+        }
+        return null;
+    }
+	
+    
+    
 //	Get player section
 	public ConfigurationSection getPlayerSection(Player p, String section) {
-		String[] tempArgs = section.split(".");
-		ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
-		for(String key : tempArgs) {
-			configSection.getConfigurationSection(key);
+		if(section.contains(".")) {
+			String[] tempArgs = section.split(".");
+			ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString());
+			for(String key : tempArgs) {
+				configSection = configSection.getConfigurationSection(key);
+			}
+			return configSection;
+		} else if(!section.contains(".")) {
+			ConfigurationSection configSection = getConfig(p).getConfigurationSection(p.getUniqueId().toString()).getConfigurationSection(section);
+			return configSection;
 		}
-		return configSection;
+		return null;
 	}
+
 //	Set player section
 	public Boolean setPlayerSection(Player p, String parentSection, String childSection) {
 		String[] tempParentSection = parentSection.split(".");
@@ -169,8 +247,8 @@ public class PlayerData {
 	}
 	
 //	Get player ToggleData
-	public String getPlayerToggleData(Player p, String ToggleEvent) {
-		String value = getPlayerData(p, "ToggleEvents", ToggleEvent);
+	public Boolean getPlayerToggleData(Player p, String ToggleEvent) {
+		Boolean value = getPlayerDataBoolean(p, "ToggleData", ToggleEvent);
 		return value;
 	}
 
@@ -179,7 +257,7 @@ public class PlayerData {
 		ConfigurationSection values = getPlayerSection(p, "ToggleData");
 		List<String> allReturnValues = new ArrayList<String>();
 		for(String toggleData : values.getKeys(false)) {
-			if(getPlayerToggleData(p, toggleData).equalsIgnoreCase("true"))
+			if(getPlayerToggleData(p, toggleData) == true)
 				allReturnValues.add(toggleData);
 		}
 		return allReturnValues;
@@ -187,46 +265,29 @@ public class PlayerData {
 	
 //	Set player ToggleData
 	public boolean setPlayerToggleData(Player p, String toggleEvent) {
-		if(!(getPlayerSection(p, "ToggleData").contains(toggleEvent)))
-			setPlayerData(p, "ToggleData", toggleEvent, "false");
-		if(getPlayerData(p, "ToggleData", toggleEvent).equalsIgnoreCase("false")) {
-			setPlayerData(p, "ToggleData", toggleEvent, "true");
+		if(getPlayerToggleData(p, toggleEvent) == false) {
+			setPlayerDataBoolean(p, "ToggleData", toggleEvent, true);
 			return true;
 		}
-		if(getPlayerData(p, "ToggleData", toggleEvent).equalsIgnoreCase("true")) {
-			setPlayerData(p, "ToggleData", toggleEvent, "false");
+		if(getPlayerToggleData(p, toggleEvent) == true) {
+			setPlayerDataBoolean(p, "ToggleData", toggleEvent, false);
 			return true;
 		}
 		return false;
 	}
 	
-	public void onLastLogin(Player p) {
-		try {
-			Date dateLastLogin = new Date();
-			getConfig(p).getConfigurationSection(p.getUniqueId().toString()).set("LastLogin", dateFormat.format(dateLastLogin).toString());
-			getConfig(p).save(playerDataFile);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-//	When player joins the server for the first time
-	public void onFirstLoginEvent() {
-		
-	}
-	
 //	When player join server
 	public void onLoginEvent(Player p) {
-		if(!(getAllPlayerToggleData(p).isEmpty())) {
+		if(!getAllPlayerToggleData(p).isEmpty()) {			
 			if(getAllPlayerToggleData(p).size() == 1)
 				p.sendMessage(main.functions.TCC(main.messages.Get("Messages.OnPlayerJoin.CurrentToggleData.Singular"), p));
 			if(getAllPlayerToggleData(p).size() >= 2)
 				p.sendMessage(main.functions.TCC(main.messages.Get("Messages.OnPlayerJoin.CurrentToggleData.Multiple"), p));
 		}
 	}
-	
-//	When player leaves server
-	public void onLogoutEvent() {
-	
+
+	public void onLogoutEvent(Player p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

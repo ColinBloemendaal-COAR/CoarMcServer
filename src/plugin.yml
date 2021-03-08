@@ -6,3 +6,11 @@ api-version: 1.16
 
 commands:
    feed: 
+   fly: 
+   gamemode: 
+   god:
+   heal:
+   ptime:
+   pweather: 
+   gms:
+     aliases: [gmc, gma, gmsp]

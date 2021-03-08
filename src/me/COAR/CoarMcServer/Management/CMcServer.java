@@ -69,6 +69,10 @@ public class CMcServer {
 						node += ToggleData.get(i).toString();
 						continue;
 					}
+					if(ToggleData.size() == i + 2) {
+						node += ToggleData.get(i).toString() + " and ";
+						continue;
+					}
 		            node += ToggleData.get(i) + ", ";
 		            tellConsole(node);
 				}

@@ -15,7 +15,6 @@ import me.COAR.CoarMcServer.Management.CMcServer;
 import me.COAR.CoarMcServer.Management.Macros;
 import me.COAR.CoarMcServer.Management.Messages;
 
-
 public class Main extends JavaPlugin implements Listener {
 	public PluginConfig config;
 	public CMcServer functions;
@@ -25,7 +24,7 @@ public class Main extends JavaPlugin implements Listener {
 
 	@Override
 	public void onEnable() {
-		getServer().getPluginManager().registerEvents(this, this); 
+		getServer().getPluginManager().registerEvents(new MyListeners(this), this);
 		this.functions = new CMcServer(this);
 		this.config = new PluginConfig(this);
 		this.macros = new Macros(this);

@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.help.HelpTopic;
 
 import me.COAR.CoarMcServer.Main;
 
@@ -111,6 +112,10 @@ public class PluginConfig {
 			getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginCommands").createSection("PersonalVaults");
 			getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginCommands").createSection("HolographicDisplays");			
 			
+			getConfig().getConfigurationSection("Config").createSection("ToggleData");
+			getConfig().getConfigurationSection("Config").getConfigurationSection("ToggleData");
+			getConfig().getConfigurationSection("Config").getConfigurationSection("ToggleData").set("FlyGmcGmsp", false);
+
 			saveConfig();
 		}
 	}
