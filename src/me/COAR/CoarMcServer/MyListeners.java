@@ -8,8 +8,6 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 import me.COAR.CoarMcServer.Management.NegEffects;
 
@@ -62,17 +60,14 @@ public class MyListeners implements Listener {
 			if(main.seplayer.getPlayerToggleData(player, "God") == true) {
 				main.functions.tellConsole("1");
 				
-		        for(PotionEffect effect : event.getNewEffect()){
-		        	main.functions.tellConsole("in loop");
-		            for(NegEffects bad: NegEffects.values()){
+				for(NegEffects bad : NegEffects.values()) {
+					if(bad.name().equals(event.getNewEffect().getType().toString())) {
 		            	main.functions.tellConsole(bad.toString());
-			            if(effect.getType().getName().equalsIgnoreCase(bad.name())){
 			            	main.functions.tellConsole("haiii");
-//			                event.setCancelled(true);     
-//			                player.removePotionEffect(effect.getType());
-			            }
-		            }           
-		        }
+			                player.removePotionEffect(event.getNewEffect().getType());
+			                event.setCancelled(true);     
+					}
+				}
 			}
 		}
 	}
