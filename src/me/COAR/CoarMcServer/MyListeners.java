@@ -59,6 +59,8 @@ public class MyListeners implements Listener {
 			Player player = (Player) event.getEntity();
 			if(main.seplayer.getPlayerToggleData(player, "God") == true) {
 				main.functions.tellConsole("1");
+				
+				// COAR me - Needs to be tested - When mc effect is added to player and god is enabled remove effect / disable event
 				for(NegEffects bad : NegEffects.values()) {
 					if(bad.name().equals(event.getNewEffect().getType().toString())) {
 		            	main.functions.tellConsole(bad.toString());

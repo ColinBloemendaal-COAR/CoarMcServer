@@ -31,14 +31,19 @@ public class Gamemode implements CommandExecutor {
 				if(sender instanceof Player) {
 					Player player = (Player) sender;
 					if(player.hasPermission("ServerEssentials.Gamemode" + currentMode)) {
-						if(currentMode.equalsIgnoreCase("CREATIVE"))
-							player.setGameMode(GameMode.CREATIVE);
-						if(currentMode.equalsIgnoreCase("SURVIVAL"))
-							player.setGameMode(GameMode.SURVIVAL);
-						if(currentMode.equalsIgnoreCase("ADVENTURE"))
-							player.setGameMode(GameMode.ADVENTURE);
-						if(currentMode.equalsIgnoreCase("SPECTATOR"))
-							player.setGameMode(GameMode.SPECTATOR);
+						for(int i = 0; i < fullLbls.length; i++) {
+							// Needs to be tested
+							if(currentMode.equalsIgnoreCase(fullLbls[i]))
+								player.setGameMode(GameMode.valueOf(fullLbls[i]));
+						}						
+//						if(currentMode.equalsIgnoreCase("CREATIVE"))
+//							player.setGameMode(GameMode.CREATIVE);
+//						if(currentMode.equalsIgnoreCase("SURVIVAL"))
+//							player.setGameMode(GameMode.SURVIVAL);
+//						if(currentMode.equalsIgnoreCase("ADVENTURE"))
+//							player.setGameMode(GameMode.ADVENTURE);
+//						if(currentMode.equalsIgnoreCase("SPECTATOR"))
+//							player.setGameMode(GameMode.SPECTATOR);
 						
 						player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.Set"), player));
 					} else {
