@@ -1,4 +1,4 @@
-package me.COAR.CoarMcServer.Management;
+package me.COAR.CoarMcServer.Data;
 
 import java.io.File;
 import java.io.IOException;

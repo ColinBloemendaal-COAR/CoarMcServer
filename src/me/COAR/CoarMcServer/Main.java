@@ -9,11 +9,11 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.COAR.CoarMcServer.Data.Macros;
+import me.COAR.CoarMcServer.Data.Messages;
 import me.COAR.CoarMcServer.Data.PlayerData;
 import me.COAR.CoarMcServer.Data.PluginConfig;
 import me.COAR.CoarMcServer.Management.CMcServer;
-import me.COAR.CoarMcServer.Management.Macros;
-import me.COAR.CoarMcServer.Management.Messages;
 
 public class Main extends JavaPlugin implements Listener {
 	public PluginConfig config;

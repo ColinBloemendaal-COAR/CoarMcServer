@@ -59,13 +59,12 @@ public class MyListeners implements Listener {
 			Player player = (Player) event.getEntity();
 			if(main.seplayer.getPlayerToggleData(player, "God") == true) {
 				main.functions.tellConsole("1");
-				
 				for(NegEffects bad : NegEffects.values()) {
 					if(bad.name().equals(event.getNewEffect().getType().toString())) {
 		            	main.functions.tellConsole(bad.toString());
-			            	main.functions.tellConsole("haiii");
-			                player.removePotionEffect(event.getNewEffect().getType());
-			                event.setCancelled(true);     
+		            	main.functions.tellConsole("haiii");
+		                player.removePotionEffect(event.getNewEffect().getType());
+		                event.setCancelled(true);     
 					}
 				}
 			}
