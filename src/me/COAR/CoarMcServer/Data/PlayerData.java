@@ -136,8 +136,11 @@ public class PlayerData {
 			getConfig(p).getConfigurationSection(playerId).set("FirstLogin", "");
 		else
 			getConfig(p).getConfigurationSection(playerId).set("FirstLogin", main.functions.getDateFormat().format(dateFirstLogin.toString()));
+		getConfig(p).getConfigurationSection(playerId).set("ReturnMessage", "");
+		
 		getConfig(p).getConfigurationSection(playerId).set("LastLogin", "");
 		getConfig(p).getConfigurationSection(playerId).createSection("ToggleData");
+		
 		
 		saveConfig(p);
 	}
