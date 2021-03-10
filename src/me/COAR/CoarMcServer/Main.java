@@ -33,7 +33,11 @@ public class Main extends JavaPlugin implements Listener {
 		
 		macros.saveDefaultConfig();
 		messages.saveDefaultConfig();
-
+//		this.getCommand("gms").setExecutor(new Gamemode(this));
+//		this.getCommand("gms").setTabCompleter(new GamemodeTabCompletion(this));
+		
+		
+		
 //		config.saveDefaultFile();
 		for(String key : config.getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginSection").getKeys(false)) {
 			Bukkit.getConsoleSender().sendMessage(key);
@@ -59,12 +63,12 @@ public class Main extends JavaPlugin implements Listener {
 							e.printStackTrace();
 						}
 						try {
-							
 							Object objectCommand = ctorCommand.newInstance(this);
 							this.getCommand(key2.toLowerCase()).setExecutor((CommandExecutor) objectCommand);
 							
 							Object objectTabCompletion = ctorTabCompletion.newInstance(this);
 							this.getCommand(key2).setTabCompleter((TabCompleter) objectTabCompletion);
+							functions.tellConsole(key2);
 						} catch (InstantiationException e) {
 							e.printStackTrace();
 						} catch (IllegalAccessException e) {

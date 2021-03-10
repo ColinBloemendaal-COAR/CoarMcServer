@@ -27,7 +27,6 @@ public class MyListeners implements Listener {
 			if(!main.seplayer.getConfig(player).contains(player.getUniqueId().toString())) {
 				main.seplayer.saveDefault(player); 
 			}
-			main.functions.tellConsole("2");
 			main.seplayer.onLoginEvent(player);
 		}
 	}
@@ -54,19 +53,14 @@ public class MyListeners implements Listener {
 	}
 	@EventHandler
 	public void PlayerPotionEvent(EntityPotionEffectEvent event) {
-		main.functions.tellConsole("haiii");
 		if(event.getEntity() instanceof Player) {
 			Player player = (Player) event.getEntity();
-			if(main.seplayer.getPlayerToggleData(player, "God") == true) {
-				main.functions.tellConsole("1");
-				
+			if(main.seplayer.getPlayerToggleData(player, "God") == true) {				
 				// COAR me - Needs to be tested - When mc effect is added to player and god is enabled remove effect / disable event
-				for(NegEffects bad : NegEffects.values()) {
-					if(bad.name().equals(event.getNewEffect().getType().toString())) {
-		            	main.functions.tellConsole(bad.toString());
-		            	main.functions.tellConsole("haiii");
-		                player.removePotionEffect(event.getNewEffect().getType());
-		                event.setCancelled(true);     
+				for(NegEffects bad : NegEffects.values()) {					
+					if(bad.name().equalsIgnoreCase(event.getNewEffect().getType().getName())) {
+		                event.setCancelled(true);   
+		                
 					}
 				}
 			}

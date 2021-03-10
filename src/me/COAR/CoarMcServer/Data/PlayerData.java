@@ -287,6 +287,8 @@ public class PlayerData {
 			if(getAllPlayerToggleData(p).size() >= 2)
 				p.sendMessage(main.functions.TCC(main.messages.Get("Messages.OnPlayerJoin.CurrentToggleData.Multiple"), p));
 		}
+		if(getPlayerToggleData(p, "Fly") == true)
+			p.setAllowFlight(true);
 	}
 
 	public void onLogoutEvent(Player p) {
