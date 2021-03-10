@@ -1,4 +1,4 @@
-package me.COAR.CoarMcServer.Essentials.Gamemode;
+package me.COAR.CoarMcServer.Essentials.Gms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 
 import me.COAR.CoarMcServer.Main;
 
-public class GamemodeTabCompletion implements TabCompleter {
+public class GmsTabCompletion implements TabCompleter {
 	private Main main;
-	public GamemodeTabCompletion(Main plugin) {
+	public GmsTabCompletion(Main plugin) {
 		this.main = plugin;
 	}
 	@Override

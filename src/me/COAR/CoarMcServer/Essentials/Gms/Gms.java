@@ -1,4 +1,4 @@
-package me.COAR.CoarMcServer.Essentials.Gamemode;
+package me.COAR.CoarMcServer.Essentials.Gms;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import me.COAR.CoarMcServer.Main;
 
 
-public class Gamemode implements CommandExecutor {
+public class Gms implements CommandExecutor {
 	private Main main;
-	public Gamemode(Main plugin) {
+	public Gms(Main plugin) {
 		this.main = plugin;
 	}
 	public boolean onCommand(CommandSender sender, Command c, String lbl, String[] args) {

@@ -13,3 +13,4 @@ commands:
    ptime:
    pweather: 
    gms: 
+      aliases: [gmc, gma, gmsp]

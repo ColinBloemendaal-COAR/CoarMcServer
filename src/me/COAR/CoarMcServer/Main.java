@@ -1,7 +1,6 @@
 package me.COAR.CoarMcServer;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
@@ -67,15 +66,9 @@ public class Main extends JavaPlugin implements Listener {
 							this.getCommand(key2.toLowerCase()).setExecutor((CommandExecutor) objectCommand);
 							
 							Object objectTabCompletion = ctorTabCompletion.newInstance(this);
-							this.getCommand(key2).setTabCompleter((TabCompleter) objectTabCompletion);
+							this.getCommand(key2.toLowerCase()).setTabCompleter((TabCompleter) objectTabCompletion);
 							functions.tellConsole(key2);
-						} catch (InstantiationException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
-						} catch (IllegalArgumentException e) {
-							e.printStackTrace();
-						} catch (InvocationTargetException e) {
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
