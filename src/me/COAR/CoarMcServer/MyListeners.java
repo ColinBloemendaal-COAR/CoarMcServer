@@ -59,8 +59,7 @@ public class MyListeners implements Listener {
 				// COAR me - Needs to be tested - When mc effect is added to player and god is enabled remove effect / disable event
 				for(NegEffects bad : NegEffects.values()) {					
 					if(bad.name().equalsIgnoreCase(event.getNewEffect().getType().getName())) {
-		                event.setCancelled(true);   
-		                
+		                event.setCancelled(true);
 					}
 				}
 			}
