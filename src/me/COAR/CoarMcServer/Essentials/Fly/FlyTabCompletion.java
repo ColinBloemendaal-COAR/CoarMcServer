@@ -28,7 +28,7 @@ public class FlyTabCompletion implements TabCompleter {
 					if(p.getDisplayName().equals(player.getDisplayName()))
 						continue;
 				}
-				if(p.hasPermission("ServerEssentials.Fly.Others.Unable"))
+				if(p.hasPermission("CoarMcServer.Fly.Others.Unable"))
 					continue;
 				tabArguments.add(p.getDisplayName());
 			}

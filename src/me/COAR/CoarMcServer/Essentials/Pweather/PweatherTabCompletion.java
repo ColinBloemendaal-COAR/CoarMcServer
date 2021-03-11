@@ -22,8 +22,8 @@ public class PweatherTabCompletion implements TabCompleter {
 		Player player = (Player) sender;
 		List<String> tabResults = new ArrayList<String>();
 		List<String> tabArguments = new ArrayList<String>();
-		if(player.hasPermission("ServerEssentials.Pweather")) {
-			if(player.hasPermission("ServerEssentials.Pweather.Others")) {
+		if(player.hasPermission("CoarMcServer.Pweather")) {
+			if(player.hasPermission("CoarMcServer.Pweather.Others")) {
 				if(args.length == 1) { 
 					tabArguments.add("rain"); tabArguments.add("clear");
 					tabArguments.add("reset");
@@ -70,7 +70,7 @@ public class PweatherTabCompletion implements TabCompleter {
 					return tabResults;
 				}
 				return tabResults;
-			} else if(player.hasPermission("ServerEssentials.Pweather")) {
+			} else if(player.hasPermission("CoarMcServer.Pweather")) {
 				if(args.length == 1) {
 					tabArguments.add("rain"); tabArguments.add("clear");
 					tabArguments.add("reset");

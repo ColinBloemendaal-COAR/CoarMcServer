@@ -22,8 +22,8 @@ public class PtimeTabCompletion implements TabCompleter {
 		Player player = (Player) sender;
 		List<String> tabResults = new ArrayList<String>();
 		List<String> tabArguments = new ArrayList<String>();
-		if(player.hasPermission("ServerEssentials.Ptime")) {
-			if(player.hasPermission("ServerEssentials.Ptime.Others")) {
+		if(player.hasPermission("CoarMcServer.Ptime")) {
+			if(player.hasPermission("CoarMcServer.Ptime.Others")) {
 				if(args.length == 1) { 
 					tabArguments.add("day"); tabArguments.add("noon");
 					tabArguments.add("night"); tabArguments.add("midnight");
@@ -75,7 +75,7 @@ public class PtimeTabCompletion implements TabCompleter {
 				} else {
 					return tabResults;
 				}
-			} else if(player.hasPermission("ServerEssentials.Ptime")) {
+			} else if(player.hasPermission("CoarMcServer.Ptime")) {
 				if(args.length == 1) {
 					tabArguments.add("day"); tabArguments.add("noon");
 					tabArguments.add("night"); tabArguments.add("midnight");

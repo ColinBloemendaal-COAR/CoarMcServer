@@ -22,14 +22,14 @@ public class Feed implements CommandExecutor{
 			} else if(sender instanceof Player) {
 				
 				Player player = (Player) sender;
-				if(player.hasPermission("ServerEssentials.feed")) {
+				if(player.hasPermission("CoarMcServer.feed")) {
 					if(args.length == 0) {
 						player.setFoodLevel(20);
 						player.setSaturation(20);
 						player.sendMessage(main.functions.TCC(main.messages.getConfig().getString("Messages.Feed.Succesfull")));
 						return true;
 					} else if(args.length == 1) {
-						if(player.hasPermission("ServerEssentials.Feed.Others")) {
+						if(player.hasPermission("CoarMcServer.Feed.Others")) {
 							if(Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getServer().getPlayer(args[0]))) {
 								Player p = (Player) Bukkit.getServer().getPlayer(args[0]);
 								p.setFoodLevel(20);

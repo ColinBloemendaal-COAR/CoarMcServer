@@ -25,7 +25,7 @@ public class HealTabCompletion implements TabCompleter {
 			for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if(p.getName().equals(player.getDisplayName()))
 					continue;
-				if(p.hasPermission("ServerEssentials.Heal.Others.Unable"))
+				if(p.hasPermission("CoarMcServer.Heal.Others.Unable"))
 					continue;
 				tabArguments.add(p.getDisplayName());
 			}

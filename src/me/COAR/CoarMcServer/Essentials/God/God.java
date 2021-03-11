@@ -17,7 +17,7 @@ public class God implements CommandExecutor {
 	}
 	public boolean onCommand(CommandSender sender, Command c, String lbl, String[] args) {
 		if(lbl.equalsIgnoreCase("god")) {
-			if(sender.hasPermission("ServerEssentials.God")) {
+			if(sender.hasPermission("CoarMcServer.God")) {
 				if(args.length == 0) {
 					if(sender instanceof ConsoleCommandSender) {
 						sender.sendMessage(main.messages.Get("Messages.ErrorMessages.MustBePlayer") + lbl);
@@ -32,7 +32,7 @@ public class God implements CommandExecutor {
 						player.sendMessage(main.functions.TCC(main.messages.Get("Messages.God.Disabled")));
 					return true;
 				} else if(args.length == 1) {
-					if(sender.hasPermission("ServerEssentials.God.Others")) {
+					if(sender.hasPermission("CoarMcServer.God.Others")) {
 						if(Bukkit.getServer().getPlayer(args[0]) != null) {
 							Player p = (Player) Bukkit.getServer().getPlayer(args[0]);
 							main.seplayer.setPlayerToggleData(p, "God");

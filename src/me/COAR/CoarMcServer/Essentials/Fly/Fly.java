@@ -20,7 +20,7 @@ public class Fly implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command c, String lbl, String[] args) {
 		if(lbl.equalsIgnoreCase("fly")) { 
-			if(sender.hasPermission("ServerEssentials.Fly")) {
+			if(sender.hasPermission("CoarMcServer.Fly")) {
 				if(args.length == 0) {
 					if(sender instanceof ConsoleCommandSender) {
 						sender.sendMessage(main.functions.TCC(main.messages.Get("Messages.ErrorMessages.MustBePlayer")));
@@ -59,7 +59,7 @@ public class Fly implements CommandExecutor {
 					    return true;
 					}
 				} else if(args.length == 1) {
-					if(sender.hasPermission("ServerEssentials.Fly.Other")) {
+					if(sender.hasPermission("CoarMcServer.Fly.Other")) {
 						if(Bukkit.getServer().getPlayer(args[0]) != null) {
 							Player p = (Player) Bukkit.getServer().getPlayer(args[0]);
 							if(main.config.getPluginSectionToggleData("ToggleData", "Flygmcgmsp") == true) {

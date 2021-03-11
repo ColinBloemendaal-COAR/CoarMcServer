@@ -30,11 +30,17 @@ public class Gms implements CommandExecutor {
 			if(args.length == 0) {
 				if(sender instanceof Player) {
 					Player player = (Player) sender;
-					if(player.hasPermission("ServerEssentials.Gamemode" + currentMode)) {
+					if(player.hasPermission("CoarMcServer.Gamemode" + currentMode)) {
 						// Set gamemode to args
 						for(int i = 0; i < fullLbls.length; i++)
 							if(currentMode.equalsIgnoreCase(fullLbls[i]))
 								player.setGameMode(GameMode.valueOf(fullLbls[i]));
+						// Check if the Fly command is enabled and if true check if player flight is enabled
+						if(main.config.getPluginSectionToggleData("EnabledPluginCommands.Essentials", "Fly") == true)
+							if(main.seplayer.getPlayerToggleData(player, "Fly") == true)
+								player.setAllowFlight(true);
+
+						
 						player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.Set"), player));
 					} else {
 						return false;
@@ -44,12 +50,12 @@ public class Gms implements CommandExecutor {
 					return false;
 				}
 			} else if(args.length == 1) {
-				if(sender.hasPermission("ServerEssentials.Gamemode.Others")) {
+				if(sender.hasPermission("CoarMcServer.Gamemode.Others")) {
 					if(Bukkit.getServer().getPlayer(args[0]) != null) {
 						Player p = Bukkit.getServer().getPlayer(args[0]);
 						if(sender instanceof Player) {
 							Player player = (Player) sender;
-							if(p.hasPermission("ServerEssentials.Gamemode.Unable")) {
+							if(p.hasPermission("CoarMcServer.Gamemode.Unable")) {
 								player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.Unable"), player, p));
 								return true;
 							}
@@ -57,7 +63,7 @@ public class Gms implements CommandExecutor {
 							p.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.SetByOther"), player, p));
 						} else if(sender instanceof ConsoleCommandSender) {
 							ConsoleCommandSender commandSender = (ConsoleCommandSender) sender;
-							if(p.hasPermission("ServerEssentials.Gamemode.Unable")) {
+							if(p.hasPermission("CoarMcServer.Gamemode.Unable")) {
 								commandSender.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.Unable"), commandSender, p));
 								return true;
 							}
@@ -68,6 +74,10 @@ public class Gms implements CommandExecutor {
 						for(int i = 0; i < fullLbls.length; i++)
 							if(currentMode.equalsIgnoreCase(fullLbls[i]))
 								p.setGameMode(GameMode.valueOf(fullLbls[i]));
+						// Check if the Fly command is enabled and if true check if player flight is enabled
+						if(main.config.getPluginSectionToggleData("EnabledPluginCommands.Essentials", "Fly") == true)
+							if(main.seplayer.getPlayerToggleData(p, "Fly") == true)
+								p.setAllowFlight(true);
 						
 						return true;
 					} else if(Bukkit.getServer().getPlayer(args[0]) == null) {
@@ -75,12 +85,12 @@ public class Gms implements CommandExecutor {
 					}
 				}
 			} else if(args.length >= 2) {
-				if(sender.hasPermission("ServerEssentials.Gamemode.Others")) {
+				if(sender.hasPermission("CoarMcServer.Gamemode.Others")) {
 					sender.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.UsageOnOther")));
 					return true;
 				}
 				if(!(currentMode.isEmpty())) {
-					if(sender.hasPermission("ServerEssentials.Gamememode" + currentMode)) {
+					if(sender.hasPermission("CoarMcServer.Gamememode" + currentMode)) {
 						sender.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.UsageOnSelf")));
 						return true;
 					}

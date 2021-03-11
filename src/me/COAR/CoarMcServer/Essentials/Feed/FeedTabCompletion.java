@@ -26,7 +26,7 @@ public class FeedTabCompletion implements TabCompleter {
 			for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 				if(p.getDisplayName().equals(player.getDisplayName()))
 					continue;
-				if(p.hasPermission("ServerEssentials.Feed.Others.Unable"))
+				if(p.hasPermission("CoarMcServer.Feed.Others.Unable"))
 					continue;
 				tabArguments.add(p.getDisplayName());
 			}

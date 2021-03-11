@@ -22,11 +22,11 @@ public class Pweather implements CommandExecutor  {
 				return true;
 			} else if(sender instanceof Player) {
 				Player player = (Player) sender;
-				if(player.hasPermission("ServerEssentials.Pweather")) { 
+				if(player.hasPermission("CoarMcServer.Pweather")) { 
 					if(args.length == 0) {
-						if(player.hasPermission("ServerEssentials.Pweather.Others"))
+						if(player.hasPermission("CoarMcServer.Pweather.Others"))
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Pweather.UsageOnOther")));
-						else if(player.hasPermission("ServerEssentials.Pweather"))
+						else if(player.hasPermission("CoarMcServer.Pweather"))
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Pweather.UsageOnSelf")));
 						return true;
 					} else if(args.length == 1) {
@@ -53,10 +53,10 @@ public class Pweather implements CommandExecutor  {
 							return true;
 						}
 					} else if(args.length == 2) {
-						if(player.hasPermission("ServerEssentials.Pweather.Others")) {
+						if(player.hasPermission("CoarMcServer.Pweather.Others")) {
 							if(Bukkit.getServer().getPlayer(args[0]) != null) {
 								Player p = Bukkit.getServer().getPlayer(args[0]);
-								if(p.hasPermission("ServerEssentials.Pweather.Others.Unable")) {
+								if(p.hasPermission("CoarMcServer.Pweather.Others.Unable")) {
 									if(p.getDisplayName().equals(player.getDisplayName())) {
 										player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Pweather.UsageOnSelf")));
 										return true;
@@ -90,12 +90,12 @@ public class Pweather implements CommandExecutor  {
 									return true;
 								}
 							}
-						} else if(!(player.hasPermission("ServerEssentials.Pweather.Others"))) {
+						} else if(!(player.hasPermission("CoarMcServer.Pweather.Others"))) {
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Pweather.UsageOnSelf")));
 							return true;
 						}
 					} else if(args.length >= 3) {
-						if(player.hasPermission("ServerEssentials.Pweather.Others"))
+						if(player.hasPermission("CoarMcServer.Pweather.Others"))
 							player.sendMessage(main.messages.Get("Messages.Pweather.UsageOnOther"));
 						else 
 							player.sendMessage(main.messages.Get("Messages.Pweather.UsageOnSelf"));

@@ -23,7 +23,7 @@ public class Heal implements CommandExecutor {
 				return true;
 			} else if(sender instanceof Player) {
 				Player player = (Player) sender;
-				if(player.hasPermission("ServerEssentials.Heal")) {
+				if(player.hasPermission("CoarMcServer.Heal")) {
 					if(args.length == 0) {
 						player.setFoodLevel(20);
 						player.setSaturation(20);
@@ -34,7 +34,7 @@ public class Heal implements CommandExecutor {
 						player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Heal.Succesfull")));
 						return true;
 					} else if(args.length == 1) {
-						if(player.hasPermission("ServerEssentials.Heal.Others")) {
+						if(player.hasPermission("CoarMcServer.Heal.Others")) {
 							if(Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getServer().getPlayer(args[0]))) {
 								Player p = (Player) Bukkit.getServer().getPlayer(args[0]);
 								p.setFoodLevel(20);

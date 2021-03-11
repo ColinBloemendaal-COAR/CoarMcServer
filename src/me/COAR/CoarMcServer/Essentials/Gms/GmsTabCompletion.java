@@ -22,11 +22,11 @@ public class GmsTabCompletion implements TabCompleter {
 		List<String> tabArguments = new ArrayList<String>();
 		List<String> tabResults = new ArrayList<String>();
 		if(args.length == 1) {
-			if(player.hasPermission("ServerEssentials.God.Others")) {
+			if(player.hasPermission("CoarMcServer.God.Others")) {
 				for(Player p : Bukkit.getServer().getOnlinePlayers()) {
 					if(p.getDisplayName().equals(player.getDisplayName()))
 						continue;
-					if(p.hasPermission("ServerEssentials.God.Others.Unable"))
+					if(p.hasPermission("CoarMcServer.God.Others.Unable"))
 						continue;
 					tabArguments.add(p.getDisplayName());
 				}

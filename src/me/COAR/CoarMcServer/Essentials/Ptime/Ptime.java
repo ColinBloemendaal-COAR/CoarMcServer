@@ -22,11 +22,11 @@ public class Ptime implements CommandExecutor {
 				return true;
 			} else if(sender instanceof Player) {
 				Player player = (Player) sender;
-				if(player.hasPermission("ServerEssentials.Ptime")) { 
+				if(player.hasPermission("CoarMcServer.Ptime")) { 
 					if(args.length == 0) {
-						if(player.hasPermission("ServerEssentials.Ptime.Others"))
+						if(player.hasPermission("CoarMcServer.Ptime.Others"))
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Ptime.UsageOnOther")));
-						else if(player.hasPermission("ServerEssentials.ptime"))
+						else if(player.hasPermission("CoarMcServer.ptime"))
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Ptime.UsageOnSelf")));
 						return true;
 					} else if(args.length == 1) {
@@ -66,10 +66,10 @@ public class Ptime implements CommandExecutor {
 							}
 						}	
 					} else if(args.length == 2) {
-						if(player.hasPermission("ServerEssentials.Ptime.Others")) {
+						if(player.hasPermission("CoarMcServer.Ptime.Others")) {
 							if(Bukkit.getServer().getPlayer(args[0]) != null) {
 								Player p = (Player) Bukkit.getServer().getPlayer(args[0]);
-								if(p.hasPermission("ServerEssentials.Ptime.Others.Unable")) {
+								if(p.hasPermission("CoarMcServer.Ptime.Others.Unable")) {
 									if(p.getDisplayName().equals(player.getDisplayName())) {
 										player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Ptime.UsageOnSelf")));
 										return true;
@@ -118,7 +118,7 @@ public class Ptime implements CommandExecutor {
 									}
 								}
 							}
-						} else if(!(player.hasPermission("ServerEssentials.Ptime.Others"))) {
+						} else if(!(player.hasPermission("CoarMcServer.Ptime.Others"))) {
 							player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Ptime.UsageOnSelf")));
 							return true;
 						}
