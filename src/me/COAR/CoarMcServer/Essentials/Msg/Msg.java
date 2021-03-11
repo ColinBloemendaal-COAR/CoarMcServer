@@ -35,7 +35,8 @@ public class Msg implements CommandExecutor {
 						// Set and get /msg message formats
 						p.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
 						player.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
-						
+						main.seplayer.setPlayerDataString(p, p.getUniqueId().toString(), "PreviousMessage", player.getDisplayName().toString());
+						main.seplayer.setPlayerDataString(player, p.getUniqueId().toString(), "PreviousMessage", p.getDisplayName().toString());
 						// Check if there if a "Watcher" online
 						for(Player watcher : Bukkit.getOnlinePlayers())
 							if(watcher.hasPermission(""))
@@ -54,7 +55,7 @@ public class Msg implements CommandExecutor {
 						// Set and get /msg message formats
 						p.sendMessage(main.functions.TCC(main.messages.Get(""), consoleSender, p));
 						consoleSender.sendMessage(main.functions.TCC(main.messages.Get(""), consoleSender, p));
-						
+						main.seplayer.setPlayerDataString(p, p.getUniqueId().toString(), "PreviousMessage", consoleSender.getName());
 						// Check if there if a "Watcher" online
 						for(Player watcher : Bukkit.getOnlinePlayers())
 							if(watcher.hasPermission(""))
