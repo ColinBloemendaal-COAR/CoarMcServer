@@ -31,6 +31,7 @@ public class Gms implements CommandExecutor {
 				if(sender instanceof Player) {
 					Player player = (Player) sender;
 					if(player.hasPermission("ServerEssentials.Gamemode" + currentMode)) {
+						// Set gamemode to args
 						for(int i = 0; i < fullLbls.length; i++)
 							if(currentMode.equalsIgnoreCase(fullLbls[i]))
 								player.setGameMode(GameMode.valueOf(fullLbls[i]));
@@ -63,14 +64,10 @@ public class Gms implements CommandExecutor {
 							commandSender.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.SetPlayer"), commandSender, p));
 							p.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.SetByPlayer"), commandSender, p));
 						}
-						if(currentMode.equalsIgnoreCase("creative"))
-							p.setGameMode(GameMode.CREATIVE);
-						if(currentMode.equalsIgnoreCase("survival"))
-							p.setGameMode(GameMode.SURVIVAL);
-						if(currentMode.equalsIgnoreCase("adventure"))
-							p.setGameMode(GameMode.ADVENTURE);
-						if(currentMode.equalsIgnoreCase("spectator"))
-							p.setGameMode(GameMode.SPECTATOR);
+						// Set gamemode to the args
+						for(int i = 0; i < fullLbls.length; i++)
+							if(currentMode.equalsIgnoreCase(fullLbls[i]))
+								p.setGameMode(GameMode.valueOf(fullLbls[i]));
 						
 						return true;
 					} else if(Bukkit.getServer().getPlayer(args[0]) == null) {
