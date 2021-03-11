@@ -15,4 +15,5 @@ commands:
    gms: 
       aliases: [gmc, gma, gmsp]
    msg:
-	  aliases: [tell]
+      aliases: [tell]
+   r: 
