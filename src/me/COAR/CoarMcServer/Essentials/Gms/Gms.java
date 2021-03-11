@@ -19,13 +19,11 @@ public class Gms implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command c, String lbl, String[] args) {
 		String[] lbls = {"gms", "gmc", "gma", "gmsp"};
 		String[] fullLbls = {"SURVIVAL", "CREATIVE", "ADVENTURE", "SPECTATOR"};
-		main.functions.tellConsole("haiiii");
 		if(lbl.equalsIgnoreCase("gms") || lbl.equalsIgnoreCase("gmc") || lbl.equalsIgnoreCase("gma") || lbl.equalsIgnoreCase("gmsp")) {
 			String currentMode = "";
 			for(int i = 0; i < lbls.length; i++)
 				if(lbls[i].equalsIgnoreCase(lbl))
 					currentMode = fullLbls[i];
-			main.functions.tellConsole(currentMode);
 			
 			if(args.length == 0) {
 				if(sender instanceof Player) {
