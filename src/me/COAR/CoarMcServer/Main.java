@@ -13,6 +13,7 @@ import me.COAR.CoarMcServer.Data.Messages;
 import me.COAR.CoarMcServer.Data.PlayerData;
 import me.COAR.CoarMcServer.Data.PluginConfig;
 import me.COAR.CoarMcServer.Management.CMcServer;
+import me.COAR.CoarMcServer.Management.CommandLoader;
 
 public class Main extends JavaPlugin implements Listener {
 	public PluginConfig config;
@@ -20,61 +21,30 @@ public class Main extends JavaPlugin implements Listener {
 	public Macros macros;
 	public Messages messages;
 	public PlayerData seplayer;
+	private CommandLoader cmLoader;
 
 	@Override
 	public void onEnable() {
+		// Set listeners
 		getServer().getPluginManager().registerEvents(new MyListeners(this), this);
+		
+		// Set instances
 		this.functions = new CMcServer(this);
 		this.config = new PluginConfig(this);
 		this.macros = new Macros(this);
 		this.messages = new Messages(this);
 		this.seplayer = new PlayerData(this);
-		
-		macros.saveDefaultConfig();
-		messages.saveDefaultConfig();
-//		this.getCommand("gms").setExecutor(new Gamemode(this));
-//		this.getCommand("gms").setTabCompleter(new GamemodeTabCompletion(this));
+		this.cmLoader = new CommandLoader(this);
 		
 		
+		// Must run functions on startup or reload
+		cmLoader.loadCustomCommands();
 		
+		
+		// Optional default file saves - Only enable while testing
 //		config.saveDefaultFile();
-		for(String key : config.getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginSection").getKeys(false)) {
-			Bukkit.getConsoleSender().sendMessage(key);
-			if(config.getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginSection").getBoolean(key)) {
-				for(String key2 : config.getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginCommands").getConfigurationSection(key).getKeys(false)) {					
-					if(config.getConfig().getConfigurationSection("Config").getConfigurationSection("EnabledPluginCommands").getConfigurationSection(key).getBoolean(key2)) {						
-						Bukkit.getConsoleSender().sendMessage(" - " + key2);
-
-						Class<?> clazzCommand = null;
-						Class<?> clazzTabCompletion = null;
-						try {
-							clazzCommand = Class.forName("me.COAR.CoarMcServer." + key + "." + key2 + "." + key2);
-							clazzTabCompletion = Class.forName("me.COAR.CoarMcServer." + key + "." + key2 + "." + key2 + "TabCompletion");
-						} catch (ClassNotFoundException e) {
-							e.printStackTrace();
-						}
-						Constructor<?> ctorCommand = null;
-						Constructor<?> ctorTabCompletion = null;
-						try {
-							ctorCommand = clazzCommand.getConstructor(Main.class);
-							ctorTabCompletion = clazzTabCompletion.getConstructor(Main.class);
-						} catch (NoSuchMethodException | SecurityException e) {
-							e.printStackTrace();
-						}
-						try {
-							Object objectCommand = ctorCommand.newInstance(this);
-							this.getCommand(key2.toLowerCase()).setExecutor((CommandExecutor) objectCommand);
-							
-							Object objectTabCompletion = ctorTabCompletion.newInstance(this);
-							this.getCommand(key2.toLowerCase()).setTabCompleter((TabCompleter) objectTabCompletion);
-							functions.tellConsole(key2);
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		}
+//		macros.saveDefaultConfig();
+//		messages.saveDefaultConfig();
 	}
 
 	public void onDisable() {
