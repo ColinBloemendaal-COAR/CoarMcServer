@@ -16,6 +16,7 @@ public class GodTabCompletion implements TabCompleter {
 	public GodTabCompletion(Main plugin) {
 		this.main = plugin;
 	}
+	
 	@Override
 	public List<String> onTabComplete(CommandSender sender, Command c, String lbl, String[] args) {
 		Player player = (Player) sender;
