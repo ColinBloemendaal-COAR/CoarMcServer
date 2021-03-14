@@ -17,3 +17,4 @@ commands:
    msg:
       aliases: [tell]
    r: 
+   top: 

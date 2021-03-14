@@ -27,6 +27,7 @@ public class MyListeners implements Listener {
 			if(!main.seplayer.getConfig(player).contains(player.getUniqueId().toString())) {
 				main.seplayer.saveDefault(player); 
 			}
+			main.seplayer.saveDefault(player); 
 			main.seplayer.onLoginEvent(player);
 		}
 	}

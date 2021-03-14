@@ -31,9 +31,9 @@ public class Main extends JavaPlugin implements Listener {
 		this.seplayer = new PlayerData(this);
 		this.cmLoader = new CommandLoader(this);
 		
-		
 		// Must run functions on startup or reload
 		cmLoader.loadCustomCommands();
+		
 		
 		
 		// Optional default file saves - Only enable while testing

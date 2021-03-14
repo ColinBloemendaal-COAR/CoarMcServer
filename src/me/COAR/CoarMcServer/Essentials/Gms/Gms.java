@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import me.COAR.CoarMcServer.Main;
 
-
 public class Gms implements CommandExecutor {
 	private Main main;
 	public Gms(Main plugin) {
@@ -28,18 +27,21 @@ public class Gms implements CommandExecutor {
 			if(args.length == 0) {
 				if(sender instanceof Player) {
 					Player player = (Player) sender;
-					if(player.hasPermission("CoarMcServer.Gamemode" + currentMode)) {
+					if(player.hasPermission("CoarMcServer.Gamemode." + currentMode)) {				
 						// Set gamemode to args
-						for(int i = 0; i < fullLbls.length; i++)
-							if(currentMode.equalsIgnoreCase(fullLbls[i]))
+						for(int i = 0; i < fullLbls.length; i++) {
+							if(currentMode.equalsIgnoreCase(fullLbls[i])) {
 								player.setGameMode(GameMode.valueOf(fullLbls[i]));
+							}
+						}
 						// Check if the Fly command is enabled and if true check if player flight is enabled
-						if(main.config.getPluginSectionToggleData("EnabledPluginCommands.Essentials", "Fly") == true)
-							if(main.seplayer.getPlayerToggleData(player, "Fly") == true)
-								player.setAllowFlight(true);
-
-						
+						if(main.config.getPluginSectionToggleData("EnabledPluginCommands.Essentials", "Fly") == true) {
+							if(main.seplayer.getPlayerToggleData(player, "Fly") == true) {
+								player.setAllowFlight(true); 
+							}
+						}						
 						player.sendMessage(main.functions.TCC(main.messages.Get("Messages.Gamemode.Set"), player));
+						return true;
 					} else {
 						return false;
 					}

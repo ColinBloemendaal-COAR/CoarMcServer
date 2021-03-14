@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.org.apache.commons.lang3.StringUtils;
 
 import me.COAR.CoarMcServer.Main;
 
@@ -121,10 +122,12 @@ public class PluginConfig {
 	
 //	Get server config data
 	public boolean getPluginSectionToggleData(String section, String value) {
-		String[] tempArgs = section.split(".");
+		int tempi = StringUtils.countMatches(section, ".");
+		String tempArgs[] = section.split(".", tempi);
+
 		ConfigurationSection configSection = getConfig().getConfigurationSection("Config");
 		for(String key : tempArgs) {
-			configSection.getConfigurationSection(key);
+			configSection = configSection.getConfigurationSection(key);
 		}
 		return configSection.getBoolean(value);
 	}

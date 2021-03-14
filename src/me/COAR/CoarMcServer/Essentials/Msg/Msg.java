@@ -20,13 +20,17 @@ public class Msg implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command c, String lbl, String[] args) {
 		if(lbl.equalsIgnoreCase("msg") || lbl.equalsIgnoreCase("tell")) {
 			if(sender.hasPermission("CoarMcServer.Msg")) {
-				if(args.length <= 1) {
+				if(args.length == 0) {
 					// Add usage message for the /msg command
-					sender.sendMessage(main.functions.TCC(main.messages.Get("")));
+					sender.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Usage"), sender, sender, ""));
+					return true;
+				} else if(args.length == 1) { 
+					// Add usage message for the /msg command
+					sender.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Usage"), sender, sender, ""));
 					return true;
 				} else if(args.length >= 2) {
 					String message = "";
-					for(int i = 1; i <= args.length; i++) {
+					for(int i = 1; i < args.length; i++) {
 						message += args[i] + " ";
 					}
 					if(sender instanceof Player) {
@@ -35,27 +39,28 @@ public class Msg implements CommandExecutor {
 							Player p = Bukkit.getServer().getPlayer(args[0]);
 							if(main.seplayer.getPlayerToggleData(player, "MessageToggle") == true) {
 								// return message that CommandExecutor has this toggled ans it has been turned of so that he can can start sending and recieving messages again
-								player.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
+								player.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.ToggleSelf"), player, p, ""));
 							}
 							if(main.seplayer.getPlayerToggleData(p, "MessageToggle") == true) {
 								// return that the commandReciever has this toggled and so wishes not to recieve /msg or /r commands
-								player.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
+								player.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.ToggleOther"), player, p, ""));
 								return true;
 							}
 							// Set and get /msg message formats
-							p.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
-							player.sendMessage(main.functions.TCC(main.messages.Get(""), player, p));
-							main.seplayer.setPlayerDataString(p, p.getUniqueId().toString(), "PreviousMessage", player.getDisplayName().toString());
-							main.seplayer.setPlayerDataString(player, player.getUniqueId().toString(), "PreviousMessage", p.getDisplayName().toString());
+							p.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Format"), player, p, message));
+							player.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Format"), player, p, message));
+							main.seplayer.getConfig(p).getConfigurationSection(p.getUniqueId().toString()).set("ReturnMessage", player.getName().toString());
+							main.seplayer.getConfig(player).getConfigurationSection(player.getUniqueId().toString()).set("ReturnMessage", p.getName().toString());
+
 							// Check if there if a "Watcher" online
 							for(Player watcher : Bukkit.getOnlinePlayers())
 								if(watcher.hasPermission(""))
 									if(main.seplayer.getPlayerToggleData(watcher, "MessageWatcher") == true)
-										watcher.sendMessage(main.functions.TCC(main.messages.Get(""), player, p)); // set message
+										watcher.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Format"), player, p, message));
 							
 							return true;
 						} else if(Bukkit.getServer().getPlayer(args[0]) == null) {
-							sender.sendMessage(main.functions.TCC(main.messages.Get("")));
+							sender.sendMessage(main.functions.testTCC(main.messages.Get("Messages.ErrorMessages.CantFindOnlinePlayer"), sender, sender, ""));
 							return false;
 						}
 					} else if(sender instanceof ConsoleCommandSender) {

@@ -182,7 +182,6 @@ public class CMcServer {
 		for(String key : main.macros.getConfig().getConfigurationSection("macros").getKeys(false)) {
 			String macroName = "%" + key + "%";
 			String node = main.macros.getConfig().getString("macros." + key);
-			
 			// Dynamic node values
 			if(key.equals("CommandReciever")) {
 				if(reciever instanceof Player) {
@@ -230,6 +229,10 @@ public class CMcServer {
 			            node += ToggleData.get(i) + ", ";
 			            tellConsole(node);
 					}
+				}
+			} else if(key.equals("Command")) {
+				if(customValue instanceof String) {
+					node = customValue.toString();
 				}
 			}
 

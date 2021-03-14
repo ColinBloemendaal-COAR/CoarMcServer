@@ -1,5 +1,6 @@
 package me.COAR.CoarMcServer.Management;
 
+
 import java.lang.reflect.Constructor;
 
 import org.bukkit.Bukkit;
@@ -39,10 +40,10 @@ public class CommandLoader {
 							e.printStackTrace();
 						}
 						try {
-							Object objectCommand = ctorCommand.newInstance(this);
+							Object objectCommand = ctorCommand.newInstance(main);
 							main.getCommand(key2.toLowerCase()).setExecutor((CommandExecutor) objectCommand);
 							
-							Object objectTabCompletion = ctorTabCompletion.newInstance(this);
+							Object objectTabCompletion = ctorTabCompletion.newInstance(main);
 							main.getCommand(key2.toLowerCase()).setTabCompleter((TabCompleter) objectTabCompletion);
 							main.functions.tellConsole(key2);
 						} catch (Exception e) {
