@@ -21,14 +21,11 @@ public class MyListeners implements Listener {
 	public void PlayerJoinEvent(PlayerJoinEvent event) {
 		if(event.getPlayer() instanceof Player) {
 			Player player = (Player) event.getPlayer();
-			if(!(player.hasPlayedBefore())) {
-				main.seplayer.saveDefault(player); 
-			}
-			if(!main.seplayer.getConfig(player).contains(player.getUniqueId().toString())) {
-				main.seplayer.saveDefault(player); 
-			}
+//			if(!(player.hasPlayedBefore()))
+//				main.seplayer.saveDefault(player); 
+//			if(main.seplayer.getPlayerFile(player).getName() != player.getUniqueId().toString())
+//				main.seplayer.saveDefault(player); 
 			main.seplayer.saveDefault(player); 
-			main.seplayer.onLoginEvent(player);
 		}
 	}
 	
@@ -69,6 +66,7 @@ public class MyListeners implements Listener {
 	
 	@EventHandler
 	public void PlayerQuitEvent(PlayerQuitEvent event) {
+		main.functions.tellConsole("haiii");
 		Player p = event.getPlayer();
 		main.seplayer.onLogoutEvent(p);
 	}

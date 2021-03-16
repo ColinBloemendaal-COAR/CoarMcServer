@@ -49,9 +49,15 @@ public class Msg implements CommandExecutor {
 							// Set and get /msg message formats
 							p.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Format"), player, p, message));
 							player.sendMessage(main.functions.testTCC(main.messages.Get("Messages.Msg.Format"), player, p, message));
-							main.seplayer.getConfig(p).getConfigurationSection(p.getUniqueId().toString()).set("ReturnMessage", player.getName().toString());
-							main.seplayer.getConfig(player).getConfigurationSection(player.getUniqueId().toString()).set("ReturnMessage", p.getName().toString());
-
+//							main.seplayer.getConfig(p).getConfigurationSection(p.getUniqueId().toString()).set("ReturnMessage", "yeheasss");
+//							main.seplayer.setPlayerDataString(player, "", "ReturnMessage", "yeheasss");
+							
+//							main.seplayer.getConfig(player).getConfigurationSection(player.getUniqueId().toString()).set("ReturnMessage", p.getName());
+							
+							main.seplayer.getConfig(player).getConfigurationSection(player.getUniqueId().toString()).set("ReturnMessage", p.getDisplayName().toString());
+							main.seplayer.saveConfig(player);
+							String t = main.seplayer.getConfig(player).getConfigurationSection(player.getUniqueId().toString()).getString("ReturnMessage");
+							main.functions.tellConsole(t);
 							// Check if there if a "Watcher" online
 							for(Player watcher : Bukkit.getOnlinePlayers())
 								if(watcher.hasPermission(""))
